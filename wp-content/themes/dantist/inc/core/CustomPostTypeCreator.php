@@ -5,6 +5,35 @@ class CustomPostTypeCreator {
 	public function __construct() {
 		add_action( 'init', [ $this, 'register_gallery_type' ] );
 		add_action( 'init', [ $this, 'register_reviews_type' ] );
+		add_action( 'init', [ $this, 'custom_taxonomy_registration' ] );
+	}
+
+	public function custom_taxonomy_registration(): void {
+		$labels = array(
+			'name'              => _x( 'categories', 'taxonomy general name', 'textdomain' ),
+			'singular_name'     => _x( 'category', 'taxonomy singular name', 'textdomain' ),
+			'search_items'      => __( 'Search categories', 'textdomain' ),
+			'all_items'         => __( 'All categories', 'textdomain' ),
+			'parent_item'       => __( 'Parent category', 'textdomain' ),
+			'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
+			'edit_item'         => __( 'Edit category', 'textdomain' ),
+			'update_item'       => __( 'Update category', 'textdomain' ),
+			'add_new_item'      => __( 'Add New category', 'textdomain' ),
+			'new_item_name'     => __( 'New category Name', 'textdomain' ),
+			'menu_name'         => __( 'Categories', 'textdomain' ),
+		);
+
+		$args = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => 'categories' ),
+		);
+
+		register_taxonomy( 'categories', array( 'case' ), $args );
+
 	}
 
 	public function register_reviews_type(): void {
@@ -41,7 +70,7 @@ class CustomPostTypeCreator {
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'rewrite'            => array( 'slug' => 'Reviews' ),
+			'rewrite'            => array( 'slug' => 'reviews' ),
 			'capability_type'    => 'post',
 			'has_archive'        => true,
 			'hierarchical'       => false,
@@ -86,7 +115,7 @@ class CustomPostTypeCreator {
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'rewrite'            => array( 'slug' => 'Cases' ),
+			'rewrite'            => array( 'slug' => 'cases' ),
 			'capability_type'    => 'post',
 			'has_archive'        => true,
 			'hierarchical'       => false,

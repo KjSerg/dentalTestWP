@@ -13,7 +13,7 @@
     <div class="container">
         <div class="header-container" data-aos="fade-down">
 			<?php if ( $tel = get_field( 'tel', 'option' ) ): ?>
-                <a href="tel:01257822888" class="header-tel">
+                <a href="<?php the_phone_link($tel); ?>" class="header-tel">
                 <span class="icon header-tel__icon"><svg width="16" height="26" viewBox="0 0 16 26" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
 <path d="M12.3363 25.5256H2.97646C1.33425 25.5256 -0.00195312 24.1895 -0.00195312 22.5472L-0.000956031 2.97822C-0.000956031 1.33601 1.33514 -0.00019455 2.97746 -0.00019455H12.3373C13.9795 -0.00019455 15.3157 1.3359 15.3157 2.97822V22.5483C15.3157 24.1905 13.9796 25.5267 12.3373 25.5267L12.3363 25.5256ZM2.97752 0.850872C1.80594 0.850872 0.85073 1.80608 0.85073 2.97767V22.5477C0.85073 23.7193 1.80594 24.6745 2.97752 24.6745H12.3373C13.5089 24.6745 14.4641 23.7193 14.4641 22.5477V2.97873C14.4641 1.80715 13.5089 0.851935 12.3373 0.851935H2.97752V0.850872Z"
@@ -24,7 +24,7 @@
 </span>
                     <span class="header-tel__container">
                 <span class="header-tel__title">Call us</span>
-                01257 822888
+                <?php esc_html($tel) ?>
                 </span>
                 </a>
 			<?php endif; ?>

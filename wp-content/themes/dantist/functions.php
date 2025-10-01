@@ -10,3 +10,5 @@ get_template_part( 'inc/helpers/helpers' );
 get_template_part( 'inc/core/CustomPostTypeCreator' );
 get_template_part( 'inc/settings/SettingsTheme' );
 get_template_part( 'inc/components/components' );
+get_template_part( 'inc/view/CasesCatalog' );
+get_template_part( 'inc/view/Screens' );
