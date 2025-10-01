@@ -54,3 +54,13 @@ function get_image( $id ) {
 
 	}
 }
+
+function get_content_by_id( $id ) {
+	if ( ! $id ) {
+		return false;
+	}
+
+	return apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
+
+
+}

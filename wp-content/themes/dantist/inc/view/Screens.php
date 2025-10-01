@@ -24,6 +24,9 @@ class Screens {
 				case 'transformations':
 					$this->render_cases( $screen );
 					break;
+				case 'reviews':
+					$this->render_reviews( $screen );
+					break;
 			}
 		}
 	}
@@ -45,7 +48,7 @@ class Screens {
 
 	private function render_cases( array $screen ): void {
 		$query_args = CasesCatalog::get_query_args();
-		$catalog = new CasesCatalog( $query_args );
+		$catalog    = new CasesCatalog( $query_args );
 		?>
         <section class="section gallery-section section-padding">
             <div class="container">
@@ -64,6 +67,34 @@ class Screens {
 						<?php $catalog->render_pagination(); ?>
                     </div>
                 </div>
+            </div>
+        </section>
+		<?php
+		wp_reset_postdata();
+		wp_reset_query();
+	}
+
+	private function render_reviews( array $screen ): void {
+		?>
+
+        <section class="section reviews-section section-padding" style="background-color: #F4EFED;">
+            <div class="container">
+                <div class="title reviews-section__title">
+					<?php echo $screen['title'] ?>
+                </div>
+            </div>
+            <div class="reviews-list">
+				<?php
+				if ( $reviews = $screen['reviews'] ) {
+					foreach ( $reviews as $review_id ) {
+						if ( get_post( $review_id ) ) {
+							echo ' <div>';
+							the_review( $review_id );
+							echo ' </div>';
+						}
+					}
+				}
+				?>
             </div>
         </section>
 		<?php
