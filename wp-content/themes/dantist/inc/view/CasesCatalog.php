@@ -5,10 +5,6 @@ namespace Dantist\View;
 use WP_Query;
 
 class CasesCatalog {
-
-	/**
-	 * @var array|mixed
-	 */
 	private mixed $query_args;
 	private WP_Query $posts;
 
@@ -17,18 +13,44 @@ class CasesCatalog {
 		$this->posts      = new WP_Query( $query_args );
 	}
 
+	public static function get_query_args(): array {
+		$default_posts_per_page = get_option( 'posts_per_page' );
+		$current_page           = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+		$case_category          = filter_input( INPUT_GET, 'case-category' );
+		$query_args             = [
+			'post_type'      => 'case',
+			'posts_per_page' => $default_posts_per_page,
+			'paged'          => $current_page,
+			'fields'         => 'ids',
+		];
+		if ( $case_category ) {
+			$query_args['tax_query'] = [
+				[
+					'taxonomy' => 'categories',
+					'field'    => 'slug',
+					'terms'    => $case_category
+				]
+			];
+		}
+
+		return $query_args;
+	}
+
 	public function render_pagination(): void {
-		$total_pages  = $this->get_max_num_pages();
+		$total_pages = $this->get_max_num_pages();
 		$current_page = $this->query_args['paged'] ?? 1;
+
 		if ( $total_pages > 1 ) {
+			$base_url = get_pagenum_link( 999999999 );
+			$base = str_replace( 999999999, '%#%', $base_url );
 
 			$pagination_args = [
-				'base'      => get_pagenum_link( 1 ) . '%_%', // Базовий URL, де %_% буде замінено на формат
-				'format'    => 'page/%#%',                    // Формат для URL сторінки (для "красивих" посилань)
-				'current'   => $current_page,                 // Поточна сторінка
-				'total'     => $total_pages,                  // Загальна кількість сторінок
-				'prev_text' => __( '' ), // Текст для посилання "назад"
-				'next_text' => __( '' ), // Текст для посилання "вперед"
+				'base'      => $base,
+				'format'    => '',
+				'current'   => $current_page,
+				'total'     => $total_pages,
+				'prev_text' => __( '' ),
+				'next_text' => __( '' ),
 			];
 
 			echo paginate_links( $pagination_args );
@@ -69,7 +91,7 @@ class CasesCatalog {
 				?>
                 <li class="gallery-categories__item">
                     <a href="<?php echo esc_url( site_url( '?case-category=' . $category->slug ) ) ?>"
-                       class="gallery-categories__link">
+                       class="gallery-categories__link ">
 						<?php echo esc_html( $category->name ) ?>
                     </a>
                 </li>

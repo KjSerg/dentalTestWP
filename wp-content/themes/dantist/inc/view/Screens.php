@@ -44,14 +44,8 @@ class Screens {
 	}
 
 	private function render_cases( array $screen ): void {
-		$default_posts_per_page = get_option( 'posts_per_page' );
-		$current_page           = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
-		$catalog                = new CasesCatalog( [
-			'post_type'      => 'case',
-			'posts_per_page' => $default_posts_per_page,
-			'paged'          => $current_page,
-			'fields'         => 'ids',
-		] );
+		$query_args = CasesCatalog::get_query_args();
+		$catalog = new CasesCatalog( $query_args );
 		?>
         <section class="section gallery-section section-padding">
             <div class="container">
@@ -63,7 +57,7 @@ class Screens {
 						<?php echo $screen['text'] ?>
                     </div>
 					<?php $catalog->render_categories(); ?>
-                    <div class="gallery-grid catalog-js">
+                    <div class="gallery-grid container-js">
 						<?php $catalog->render_catalog(); ?>
                     </div>
                     <div class="pagination  pagination-js">

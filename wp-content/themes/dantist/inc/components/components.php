@@ -20,12 +20,12 @@ function the_case_preview( $id = false ): void {
     ?>
     <div class="gallery-item">
         <a href="<?php echo esc_url($gallery[0]) ?>" data-fancybox class="gallery-item__image">
-            <img src="<?php echo esc_url($gallery[0]) ?>"
+            <img loading="lazy" src="<?php echo esc_url($gallery[0]) ?>"
                  class="cover scale-on-hover"
                  alt="">
         </a>
         <a href="<?php echo esc_url($gallery[1]) ?>" data-fancybox class="gallery-item__image">
-            <img src="<?php echo esc_url($gallery[1]) ?>"
+            <img loading="lazy" src="<?php echo esc_url($gallery[1]) ?>"
                  class="cover scale-on-hover"
                  alt="">
         </a>

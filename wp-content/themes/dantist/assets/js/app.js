@@ -19477,9 +19477,47 @@ var Application = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "linkListener",
+    value: function linkListener() {
+      var t = this;
+      var $doc = this.$doc;
+      $doc.on('click', '.pagination-js a, .gallery-categories__link', function (e) {
+        e.preventDefault();
+        var $t = $(this);
+        var href = $t.attr('href');
+        if (href === undefined || href === '') return;
+        if ($t.hasClass('gallery-categories__link')) {
+          if ($t.hasClass('active')) return;
+          $t.closest('.gallery-categories').find('.gallery-categories__link').removeClass('active');
+          $t.addClass('active');
+        }
+        $t.addClass('not-active');
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+        $.ajax({
+          type: 'GET',
+          url: href
+        }).done(function (r) {
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+          $t.removeClass('not-active');
+          if (!r) return;
+          var parser = t.parser;
+          var $r = $(parser.parseFromString(r, "text/html"));
+          var $pagination = $r.find('.pagination-js');
+          var $catalog = $r.find('.container-js');
+          $doc.find('.pagination-js').html($pagination.html());
+          $doc.find('.container-js').html($catalog.html());
+          $('html, body').animate({
+            scrollTop: $doc.find('.container-js').offset().top
+          });
+        });
+      });
+    }
+  }, {
     key: "initComponents",
     value: function initComponents() {
+      var t = this;
       this.$doc.ready(function () {
+        t.linkListener();
         aos__WEBPACK_IMPORTED_MODULE_2___default().init({
           once: true
         });
