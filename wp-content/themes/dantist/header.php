@@ -24,7 +24,7 @@
 </span>
                     <span class="header-tel__container">
                 <span class="header-tel__title">Call us</span>
-                <?php esc_html($tel) ?>
+                <?php echo esc_html($tel) ?>
                 </span>
                 </a>
 			<?php endif; ?>
