@@ -39,21 +39,6 @@ function the_image( $id ): void {
 	}
 }
 
-function get_image( $id ) {
-	if ( $id ) {
-
-		$url = wp_get_attachment_url( $id );
-
-		$pos = strripos( $url, '.svg' );
-
-		if ( $pos === false ) {
-			return img_to_base64( $url );
-		} else {
-			return _s( $url, 1 );
-		}
-
-	}
-}
 
 function get_content_by_id( $id ) {
 	if ( ! $id ) {
