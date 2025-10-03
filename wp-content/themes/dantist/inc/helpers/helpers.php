@@ -20,11 +20,6 @@ function the_phone_link( $phone_number ): void {
 	echo esc_attr( 'tel:' . str_replace( $s, $r, $phone_number ) );
 }
 
-function the_phone_number( $phone_number ): void {
-	$s = array( '', '-', ' ', '(', ')' );
-	$r = array( '', '', '', '', '' );
-	echo str_replace( $s, $r, $phone_number );
-}
 
 function the_image( $id ): void {
 	if ( $id ) {
